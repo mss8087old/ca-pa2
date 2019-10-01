@@ -123,8 +123,6 @@ You are required to complete the `int2hfp()`, `hfp2int()`, `float2hfp()`, and `h
 
 * You are not allowed to use any pointers.
 
-* You are not allowed to use the `long`
-
 * You are not allowed to use the `long` or `double` data type. Any source file that contains the word `long` or `double` (even in the comment lines) will be rejected.
 
 * Do not include any header file other than `stdio.h` and `pa2.h` in the `pa2.c` file.
