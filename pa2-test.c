@@ -36,6 +36,8 @@
 #define PRINT_HFP(i,p)		PRINT_HWORD("hfp", i, p)
 #define PRINT_FLOAT(i,p)	PRINT_WORD("float", i, p)
 #define PRINT_INT(i,p)		PRINT_WORD("int", i, p)
+#define PRINT_ANS4(i,p)		PRINT_WORD("ans", i, p)
+#define PRINT_ANS2(i,p)		PRINT_HWORD("ans", i, p)
 
 #define HFP_INF_NAN(h)		((((h) >> 10) & 0x1f) == 0x1f)
 #define FLOAT_INF_NAN(f)	((((f) >> 23) & 0xff) == 0xff)
@@ -72,7 +74,7 @@ int main(void)
 	union {
 		unsigned int u;
 		float f;
-	} x;
+	} x, ans;
 
 	printf ("\nTest 1: Casting from int to hfp\n");
 	for (i = 0; i < N; i++)
@@ -81,6 +83,7 @@ int main(void)
 		h = int2hfp(n);
 		PRINT_INT(n, " => ");
 		PRINT_HFP(h, ", ");
+		PRINT_ANS2(int2hfp_ans[i], ", ");
 		CHECK_VALUE(h, int2hfp_ans[i]);
 	}
 
@@ -91,6 +94,7 @@ int main(void)
 		n = hfp2int(h);
 		PRINT_HFP(h, " => ");
 		PRINT_INT(n, ", ");
+		PRINT_ANS4(hfp2int_ans[i], ", ");
 		CHECK_VALUE(n, hfp2int_ans[i]);
 	}
 
@@ -101,6 +105,7 @@ int main(void)
 		h = float2hfp(x.f);
 		PRINT_FLOAT(x.u, " => ");
 		PRINT_HFP(h, ", ");
+		PRINT_ANS2(float2hfp_ans[i], ", ");
 		FLOAT_INF_NAN(x.u)? CHECK_INF_NAN(x.u, h) : CHECK_VALUE(h, float2hfp_ans[i]);
 	}
 
@@ -109,8 +114,10 @@ int main(void)
 	{
 		h = hfp_fin[i];
 		x.f = hfp2float(h);
+		ans.f = hfp2float_ans[i];
 		PRINT_HFP(h, " => ");
 		PRINT_FLOAT(x.u, ", ");
+		PRINT_ANS4(ans.u, ", ");
 		HFP_INF_NAN(h)? CHECK_INF_NAN(x.u, h) : CHECK_VALUE(x.f, hfp2float_ans[i]);
 	}
 
