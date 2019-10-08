@@ -14,6 +14,7 @@
 //---------------------------------------------------------------
 
 #include <stdio.h>
+#include <math.h>
 #include "pa2.h"
 
 #define BYTE_FORMAT 		"%c%c%c%c%c%c%c%c"
@@ -49,6 +50,8 @@
 #define CHECK_VALUE(r,a)	printf("%s\n", ((r) == (a))? "CORRECT" : "WRONG")
 #define CHECK_INF_NAN(f,h)	printf("%s\n", TEST_INF_NAN(f,h)? "CORRECT" : "WRONG")
 
+unsigned int n_nan          = 0xffc00000;
+
 #define N 	6
 
 
@@ -62,7 +65,7 @@ float 	float_in[N]			= {	1.0,		3.0/(float)(1<<26),		1.0/(float)(1<<25),		5.0/(fl
 hfp		float2hfp_ans[N]	= {	0x3c00,		0x0001,					0x0000,					0x0000,					0x5f00,			0x7c00			   };
 
 hfp		hfp_fin[N]			= { 0x3c00,		0x0001,					0x7bff,		0x0400,			0xffff,		0x7c00 	};
-float	hfp2float_ans[N]	= { 1.0,		1.0/(float)(1<<24),		65504.0,	1.0/16384.0,	-0.0/0.0,	1.0/0.0 };
+float	hfp2float_ans[N]	= { 1.0,		1.0/(float)(1<<24),		65504.0,	1.0/16384.0,	-NAN,	    1.0/0.0 };
 
 
 int main(void)
